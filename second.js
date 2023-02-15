@@ -78,18 +78,19 @@ function updateData(index) {
   var Female = document.getElementById("femaleGender")
   var Male = document.getElementById("maleGender")
   console.log(peopleList[index].Gender);
-  if(peopleList[index].Gender == 'Male'){
+  if(peopleList[index].Gender == "Male"){
     Male.setAttribute("checked","checked");
   }
   else{
     Female.setAttribute("checked","checked");
   }
-  peopleList[index].Gender = Gender;
-  document.getElementById("gender").value = peopleList[index].Gender;
+
+  // document.getElementById("gender").value = peopleList[index].Gender;
 
   document.querySelector("#update").onclick = function () {
     peopleList[index].Name = document.getElementById("Name").value;
-    peopleList[index].Password = document.getElementById("Password").value;
+    peopleList[index].Password = document.getElementById("Password").value
+    peopleList[index].Gender=$("input[type='radio'][name='gender']:checked").val()
     localStorage.setItem("peopleList", JSON.stringify(peopleList));
   };
 
