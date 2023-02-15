@@ -3,6 +3,7 @@ let Name = document.getElementById("Name");
 let Password = document.getElementById("Password");
 let Gender = $("input[type='radio'][name='gender']:checked").val();
 
+
 const clickModal = () => {
   document.getElementById("submit").style.visibility = "visible";
   document.getElementById("update").style.visibility = "hidden";
@@ -65,6 +66,7 @@ function updateData(index) {
 
   $("#exampleModal").modal("show");
   let peopleList;
+  let Gender = $("input[type='radio'][name='gender']:checked").val();
   if (localStorage.getItem("peopleList") == null) {
     peopleList = [];
   } else {
@@ -73,15 +75,21 @@ function updateData(index) {
 
   document.getElementById("Name").value = peopleList[index].Name;
   document.getElementById("Password").value = peopleList[index].Password;
-  document.getElementById("gender").value = peopleList[index].Gender.checked;
+  var Female = document.getElementById("femaleGender")
+  var Male = document.getElementById("maleGender")
   console.log(peopleList[index].Gender);
+  if(peopleList[index].Gender == 'Male'){
+    Male.setAttribute("checked","checked");
+  }
+  else{
+    Female.setAttribute("checked","checked");
+  }
+  peopleList[index].Gender = Gender;
+  document.getElementById("gender").value = peopleList[index].Gender;
 
   document.querySelector("#update").onclick = function () {
     peopleList[index].Name = document.getElementById("Name").value;
     peopleList[index].Password = document.getElementById("Password").value;
-    peopleList[index].Gender = $(
-      "input[type='radio'][name='gender']:checked"
-    ).val();
     localStorage.setItem("peopleList", JSON.stringify(peopleList));
   };
 
