@@ -4,19 +4,76 @@ let Address = document.getElementById("Address");
 let email = document.getElementById("email");
 let birthday = document.getElementById("birthday");
 let Gender = $("input[type='radio'][name='gender']:checked").val();
-
 const clickModal = () => {
   document.getElementById("submit").style.visibility = "visible";
   document.getElementById("update").style.visibility = "hidden";
   document.getElementById("myForm").reset();
 };
+let form=document.getElementById("myForm");
+form.addEventListener("submit",(e)=>{e.preventDefault()})
+
+
+$(document).ready(function () {
+  var currentDate = new Date();
+  $('.disableFuturedate').datepicker({
+  format: 'dd/mm/yyyy',
+  autoclose:true,
+  endDate: "currentDate",
+  maxDate: currentDate
+  }).on('changeDate', function (ev) {
+     $(this).datepicker('hide');
+  });
+  $('.disableFuturedate').keyup(function () {
+     if (this.value.match(/[^0-9]/g)) {
+        this.value = this.value.replace(/[^0-9^-]/g, '');
+     }
+  });
+});
+
+
+
+function validation() {
+  let name = document.forms.RegForm.Name.value;
+  let Address = document.forms.RegForm.Address.value;
+  let email = document.forms.RegForm.email.value;
+//   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g; //Javascript reGex for Email Validation.
+  // Javascript reGex for Phone Number validation.
+  var regName = /\d+$/g; // Javascript reGex for Name validation
+
+  if (name == "" || regName.test(name)) {
+    window.alert("Please enter your name properly.");
+    // name.focus();
+    return false;
+  }
+
+  if (Address == "") {
+    window.alert("Please enter your address.");
+    // Address.focus();
+    return false;
+  }
+if(birthday==''){
+
+}
+  // if (email == "" || !regEmail.test(email)) {
+  //   window.alert("Please enter a valid e-mail address.");
+  //   // email.focus();
+  //   return false;
+  // }
+
+  return true;
+}
+
+// Adddata...................................................................................
+let peopleList;
 function Adddata() {
+  if (!validation()) {
+    return false;
+  }
   let Name = document.getElementById("Name").value;
   let Address = document.getElementById("Address").value;
   let email = document.getElementById("email").value;
   let birthday = document.getElementById("birthday").value;
   let Gender = $("input[type='radio'][name='gender']:checked").val();
-  let peopleList;
   if (localStorage.getItem("peopleList") == null) {
     peopleList = [];
   } else {
@@ -29,10 +86,14 @@ function Adddata() {
     email: email,
     birthday: birthday,
   });
-
   localStorage.setItem("peopleList", JSON.stringify(peopleList));
-  console.log(Name, Address, Gender, email, birthday);
+showData();
+  return true;
+  
+  // console.log(Name, Address, Gender, email, birthday);
 }
+
+// then how to shhow Data ...Adddata...Adddata.............
 function showData() {
   let peopleList;
   if (localStorage.getItem("peopleList") == null) {
@@ -50,7 +111,7 @@ function showData() {
     html += "<td>" + element.Gender + "</td>";
     html += "<td>" + element.email + "</td>";
     html += "<td>" + element.birthday + "</td>";
-    // html = "<th>" + `Edit/Delet`+"</th>";
+    
     html += ` <td><button class="btn btn-primary"  onClick="updateData(${index})" ><span class="material-symbols-outlined">
     edit
     </span></button>
@@ -59,15 +120,11 @@ function showData() {
         </span></button></td>`;
     html += "</tr>";
   });
-  document.querySelector("#head").innerHTML = `<th scope="col">Name</th>
-  <th scope="col">Address</th>
-  <th scope="col">Gender</th>
-  <th scope="col">Email</th>
-  <th scope="col">Birthday</th>
-  <th scope="col">Edit \\ Delete</th>
-  `;
+
+
   document.querySelector("#data").innerHTML = html;
 }
+// delete data/////////////////////////////////////////////////////////////////////////
 function deleteData(index) {
   let peopleList;
   if (localStorage.getItem("peopleList") == null) {
@@ -79,7 +136,7 @@ function deleteData(index) {
   localStorage.setItem("peopleList", JSON.stringify(peopleList));
   showData();
 }
-
+// update data////////////////////////////////////////////////////////////////
 function updateData(index) {
   document.getElementById("submit").style.visibility = "hidden";
   document.getElementById("update").style.visibility = "visible";
@@ -91,8 +148,6 @@ function updateData(index) {
   } else {
     peopleList = JSON.parse(localStorage.getItem("peopleList"));
   }
-  // let Gender = $("input[type='radio'][name='gender']:checked").val();
-  // console.log(Gender);
 
   document.getElementById("Name").value = peopleList[index].Name;
   document.getElementById("Address").value = peopleList[index].Address;
