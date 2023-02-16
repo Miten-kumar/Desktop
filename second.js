@@ -7,6 +7,8 @@ let Gender = $("input[type='radio'][name='gender']:checked").val();
 const clickModal = () => {
   document.getElementById("submit").style.visibility = "visible";
   document.getElementById("update").style.visibility = "hidden";
+  document.getElementById("myForm").reset();
+  
 };
 function Adddata() {
   let Name = document.getElementById("Name").value;
@@ -66,12 +68,13 @@ function updateData(index) {
 
   $("#exampleModal").modal("show");
   let peopleList;
-  let Gender = $("input[type='radio'][name='gender']:checked").val();
   if (localStorage.getItem("peopleList") == null) {
     peopleList = [];
   } else {
     peopleList = JSON.parse(localStorage.getItem("peopleList"));
   }
+  // let Gender = $("input[type='radio'][name='gender']:checked").val();
+  // console.log(Gender);
 
   document.getElementById("Name").value = peopleList[index].Name;
   document.getElementById("Password").value = peopleList[index].Password;
@@ -79,13 +82,16 @@ function updateData(index) {
   var Male = document.getElementById("maleGender")
   console.log(peopleList[index].Gender);
   if(peopleList[index].Gender == "Male"){
-    Male.setAttribute("checked","checked");
+    Female.removeAttribute("checked","checked");
+    Male.setAttribute("checked","checked")
   }
   else{
+    Male.removeAttribute("checked","checked");
     Female.setAttribute("checked","checked");
   }
 
-  // document.getElementById("gender").value = peopleList[index].Gender;
+  document.getElementById("gender").value = peopleList[index].Gender;
+  console.log(peopleList[index].Gender);
 
   document.querySelector("#update").onclick = function () {
     peopleList[index].Name = document.getElementById("Name").value;
