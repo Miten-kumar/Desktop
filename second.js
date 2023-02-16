@@ -1,97 +1,117 @@
-let myFormData = document.getElementById("myForm");
-let Name = document.getElementById("Name");
-let Address = document.getElementById("Address");
-let email = document.getElementById("email");
-let birthday = document.getElementById("birthday");
-let Gender = $("input[type='radio'][name='gender']:checked").val();
+var peopleList;
+const myFormData = document.getElementById("myForm");
+const Name = document.getElementById("Name");
+const Address = document.getElementById("Address");
+const email = document.getElementById("email");
+const birthday = document.getElementById("birthday");
+const Gender = $("input[type='radio'][name='gender']:checked").val();
+const success = document.getElementById("Success");
+const failure = document.getElementById("failure");
+
 const clickModal = () => {
   document.getElementById("submit").style.visibility = "visible";
   document.getElementById("update").style.visibility = "hidden";
   document.getElementById("myForm").reset();
 };
-let form=document.getElementById("myForm");
-form.addEventListener("submit",(e)=>{e.preventDefault()})
 
+// Validation
+function ValidateName() {
+  var check = /^[a-zA-Z]{3,10}$/;
+  if (Name.value == "" || check.test(Name.value) == false) {
+    Name.style.border = "1px solid red";
+    return false;
+  } else {
+    Name.style.border = "1px solid green";
+    return true;
+  }
+}
 
-$(document).ready(function () {
-  var currentDate = new Date();
-  $('.disableFuturedate').datepicker({
-  format: 'dd/mm/yyyy',
-  autoclose:true,
-  endDate: "currentDate",
-  maxDate: currentDate
-  }).on('changeDate', function (ev) {
-     $(this).datepicker('hide');
-  });
-  $('.disableFuturedate').keyup(function () {
-     if (this.value.match(/[^0-9]/g)) {
-        this.value = this.value.replace(/[^0-9^-]/g, '');
-     }
-  });
+function ValidateAddress() {
+  console.log("helo");
+  var regAdress = /^[a-zA-Z]{3,20}$/;
+  if (Address == "" || regAdress.test(Address.value) == false) {
+    Address.style.borderBottom = "2px solid red";
+    return false;
+  } else {
+    Address.style.borderBottom = "2px solid green";
+    return true;
+  }
+}
+function ValidateDOB() {
+  // console.log(birthdayGiven);
+  var ara1 = birthday.value.split("-");
+  var todayDate = new Date();
+  var compar = `${todayDate.getFullYear()}-${
+    todayDate.getMonth() + 1
+  }-${todayDate.getDate()}`;
+  var ara2 = compar.split("-");
+  for (let index = 0; index < ara1.length; index++) {
+    if (ara1[index] <= ara2[index] || ara1[index] == ara2[index]) {
+      console.log("true");
+      birthday.style.borderBottom = "2px solid green";
+      return true;
+    } else {
+      birthday.style.borderBottom = "2px solid red";
+      console.log("false");
+      return false;
+    }
+  }
+}
+// Validation
+let form = document.getElementById("myForm");
+form.addEventListener("submit", (e) => {
+  // e.preventDefault();
 });
 
 
 
-function validation() {
-  let name = document.forms.RegForm.Name.value;
-  let Address = document.forms.RegForm.Address.value;
-  let email = document.forms.RegForm.email.value;
-//   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g; //Javascript reGex for Email Validation.
-  // Javascript reGex for Phone Number validation.
-  var regName = /\d+$/g; // Javascript reGex for Name validation
-
-  if (name == "" || regName.test(name)) {
-    window.alert("Please enter your name properly.");
-    // name.focus();
-    return false;
-  }
-
-  if (Address == "") {
-    window.alert("Please enter your address.");
-    // Address.focus();
-    return false;
-  }
-if(birthday==''){
-
-}
-  // if (email == "" || !regEmail.test(email)) {
-  //   window.alert("Please enter a valid e-mail address.");
-  //   // email.focus();
-  //   return false;
-  // }
-
-  return true;
-}
-
 // Adddata...................................................................................
-let peopleList;
-function Adddata() {
-  if (!validation()) {
-    return false;
+
+
+
+  function Adddata() {
+    // if (
+    //   ValidateName() == true &&
+    //   ValidateAddress() == true 
+    //   ValidateDOB() == true
+    // ) {
+
+    let Name1 = document.getElementById("Name").value;
+    let Address1 = document.getElementById("Address").value;
+    let email1 = document.getElementById("email").value;
+    let birthday1 = document.getElementById("birthday").value;
+    let Gender1 = $("input[type='radio'][name='gender']:checked").val();
+    if (localStorage.getItem("peopleList") == null) {
+      peopleList = [];
+    } else {
+      peopleList = JSON.parse(localStorage.getItem("peopleList"));
+    }
+    peopleList.push({
+      Name: Name1,
+      Address: Address1,
+      Gender: Gender1,
+      email: email1,
+      birthday: birthday1,
+    });
+    localStorage.setItem("peopleList", JSON.stringify(peopleList));
+    showData();
+    failure.style.display = "none";
+    success.style.display = "block";
+    setTimeout(function () {
+      location.reload();
+    }, 2000);
+    return true;
+
+    // console.log(Name, Address, Gender, email, birthday);
   }
-  let Name = document.getElementById("Name").value;
-  let Address = document.getElementById("Address").value;
-  let email = document.getElementById("email").value;
-  let birthday = document.getElementById("birthday").value;
-  let Gender = $("input[type='radio'][name='gender']:checked").val();
-  if (localStorage.getItem("peopleList") == null) {
-    peopleList = [];
-  } else {
-    peopleList = JSON.parse(localStorage.getItem("peopleList"));
-  }
-  peopleList.push({
-    Name: Name,
-    Address: Address,
-    Gender: Gender,
-    email: email,
-    birthday: birthday,
-  });
-  localStorage.setItem("peopleList", JSON.stringify(peopleList));
-showData();
-  return true;
-  
-  // console.log(Name, Address, Gender, email, birthday);
-}
+//   else {
+//     failure.style.display = "block";
+//     success.style.display = "none";
+//     setTimeout(function () {
+//       location.reload();
+//     },2000);
+//   }
+// } 
 
 // then how to shhow Data ...Adddata...Adddata.............
 function showData() {
@@ -111,7 +131,7 @@ function showData() {
     html += "<td>" + element.Gender + "</td>";
     html += "<td>" + element.email + "</td>";
     html += "<td>" + element.birthday + "</td>";
-    
+
     html += ` <td><button class="btn btn-primary"  onClick="updateData(${index})" ><span class="material-symbols-outlined">
     edit
     </span></button>
@@ -120,7 +140,6 @@ function showData() {
         </span></button></td>`;
     html += "</tr>";
   });
-
 
   document.querySelector("#data").innerHTML = html;
 }
@@ -180,3 +199,10 @@ function updateData(index) {
 
   showData();
 }
+
+// Validation
+
+// if (Address == "") {
+//   window.alert("Please enter your address.");
+//   return false;
+// }
