@@ -18,10 +18,10 @@ const clickModal = () => {
 function ValidateName() {
   var check = /^[a-zA-Z]{3,10}$/;
   if (Name.value == "" || check.test(Name.value) == false) {
-    Name.style.border = "1px solid red";
+    Name.style.border.borderBottom = "2px solid red";
     return false;
   } else {
-    Name.style.border = "1px solid green";
+    Name.style.border.borderBottom= "2px solid green";
     return true;
   }
 }
@@ -40,16 +40,16 @@ function ValidateAddress() {
 function ValidateDOB() {
   // console.log(birthdayGiven);
   var ara1 = birthday.value.split("-");
+  console.log(ara1);
   var todayDate = new Date();
-  var compar = `${todayDate.getFullYear()}-${
-    todayDate.getMonth() + 1
-  }-${todayDate.getDate()}`;
+  var compar = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
   var ara2 = compar.split("-");
+  console.log(ara2);
   for (let index = 0; index < ara1.length; index++) {
     if (ara1[index] <= ara2[index] || ara1[index] == ara2[index]) {
       console.log("true");
       birthday.style.borderBottom = "2px solid green";
-      return true;
+      // return true;
     } else {
       birthday.style.borderBottom = "2px solid red";
       console.log("false");
@@ -60,7 +60,7 @@ function ValidateDOB() {
 // Validation
 let form = document.getElementById("myForm");
 form.addEventListener("submit", (e) => {
-  // e.preventDefault();
+  e.preventDefault();
 });
 
 
@@ -70,12 +70,10 @@ form.addEventListener("submit", (e) => {
 
 
   function Adddata() {
-    // if (
-    //   ValidateName() == true &&
-    //   ValidateAddress() == true 
-    //   ValidateDOB() == true
-    // ) {
-
+    if (
+      ValidateName() == true &&
+      ValidateAddress() == true &&
+      ValidateDOB() == true){
     let Name1 = document.getElementById("Name").value;
     let Address1 = document.getElementById("Address").value;
     let email1 = document.getElementById("email").value;
@@ -101,17 +99,17 @@ form.addEventListener("submit", (e) => {
       location.reload();
     }, 2000);
     return true;
-
+    
     // console.log(Name, Address, Gender, email, birthday);
   }
-//   else {
-//     failure.style.display = "block";
-//     success.style.display = "none";
-//     setTimeout(function () {
-//       location.reload();
-//     },2000);
-//   }
-// } 
+  else {
+    failure.style.display = "block";
+    success.style.display = "none";
+    setTimeout(function () {
+      location.reload();
+    },2000);
+}
+} 
 
 // then how to shhow Data ...Adddata...Adddata.............
 function showData() {
@@ -196,7 +194,6 @@ function updateData(index) {
     ).val();
     localStorage.setItem("peopleList", JSON.stringify(peopleList));
   };
-
   showData();
 }
 
