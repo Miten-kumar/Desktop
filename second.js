@@ -29,7 +29,7 @@ function ValidateName() {
 function ValidateAddress() {
   console.log("helo");
   var regAdress = /^[a-zA-Z]{3,20}$/;
-  if (Address == "" || regAdress.test(Address.value) == false) {
+  if (Address.value == "" || regAdress.test(Address.value) == false) {
     Address.style.borderBottom = "2px solid red";
     return false;
   } else {
@@ -185,14 +185,15 @@ function updateData(index) {
   console.log(peopleList[index].Gender);
 
   document.querySelector("#update").onclick = function () {
-    peopleList[index].Name = document.getElementById("Name").value;
-    peopleList[index].Address = document.getElementById("Address").value;
-    peopleList[index].email = document.getElementById("email").value;
-    peopleList[index].birthday = document.getElementById("birthday").value;
+    peopleList[index].Name = Name.value;
+    peopleList[index].Address = Address.value;
+    peopleList[index].email = email.value;
+    peopleList[index].birthday = birthday.value;
     peopleList[index].Gender = $(
       "input[type='radio'][name='gender']:checked"
     ).val();
     localStorage.setItem("peopleList", JSON.stringify(peopleList));
+    location.reload();
   };
   showData();
 }
