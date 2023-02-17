@@ -25,7 +25,7 @@ function ValidateEmail() {
   }
 }
 
-// Validation
+// Validation...................................................................
 function ValidateName() {
   var check = /^[a-zA-Z]{3,10}$/;
   if (Name.value == "" || check.test(Name.value) == false) {
@@ -49,27 +49,32 @@ function ValidateAddress() {
   }
 }
 function ValidateDOB() {
+//   var date = new Date();
 
+// var currentMonth = date.getMonth();
+// var currentDate = date.getDate();
+// var currentYear = date.getFullYear();
+// $('#birthday').datepicker({
+// maxDate: new Date(currentYear, currentMonth, currentDate)
+// });
 
-  
-  // console.log(birthdayGiven);
-  var ara1 = birthday.value.split("-");
-  console.log(ara1);
-  var todayDate = new Date();
-  var compar = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
-  var ara2 = compar.split("-");
-  console.log(ara2);
-  for (let index = 0; index < ara1.length; index++) {
-    if (ara1[index] <= ara2[index] || ara1[index] == ara2[index]) {
-      console.log("true");
-      birthday.style.borderBottom = "2px solid green";
-      return true;
-    } else {
-      birthday.style.borderBottom = "2px solid red";
-      console.log("false");
-      return false;
-    }
-  }
+  // var ara1 = birthday.value.split("-");
+  // console.log(ara1);
+  // var todayDate = new Date();
+  // var compar = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
+  // var ara2 = compar.split("-");
+  // console.log(ara2);
+  // for (let index = 0; index < ara1.length; index++) {
+  //   if (ara1[index] <= ara2[index] || ara1[index] == ara2[index]) {
+  //     console.log("true");
+  //     birthday.style.borderBottom = "2px solid green";
+  //     return true;
+  //   } else {
+  //     birthday.style.borderBottom = "2px solid red";
+  //     console.log("false");
+  //     return false;
+  //   }
+  // }
 }
 // Validation
 let form = document.getElementById("myForm");
@@ -86,8 +91,8 @@ form.addEventListener("submit", (e) => {
   function Adddata() {
     if (
       ValidateName() == true &&
-      ValidateAddress() == true && ValidateEmail()== true &&
-      ValidateDOB() == true){
+      ValidateAddress() == true && ValidateEmail()== true 
+      ){
     let Name1 = document.getElementById("Name").value;
     let Address1 = document.getElementById("Address").value;
     let email1 = document.getElementById("email").value;
@@ -211,10 +216,3 @@ function updateData(index) {
   };
   showData();
 }
-
-// Validation
-
-// if (Address == "") {
-//   window.alert("Please enter your address.");
-//   return false;
-// }
