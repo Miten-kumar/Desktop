@@ -49,7 +49,7 @@ function ValidateDOB() {
     if (ara1[index] <= ara2[index] || ara1[index] == ara2[index]) {
       console.log("true");
       birthday.style.borderBottom = "2px solid green";
-      // return true;
+      return true;
     } else {
       birthday.style.borderBottom = "2px solid red";
       console.log("false");
