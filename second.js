@@ -14,21 +14,32 @@ const clickModal = () => {
   document.getElementById("myForm").reset();
 };
 
+function ValidateEmail() {
+  var check =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (email.value == "" || check.test(email.value) == false) {
+    email.style.borderBottom = "2px solid red";
+    return false;
+  } else {
+    email.style.borderBottom= "2px solid green";
+    return true;
+  }
+}
+
 // Validation
 function ValidateName() {
   var check = /^[a-zA-Z]{3,10}$/;
   if (Name.value == "" || check.test(Name.value) == false) {
-    Name.style.border.borderBottom = "2px solid red";
+    Name.style.borderBottom = "2px solid red";
     return false;
   } else {
-    Name.style.border.borderBottom= "2px solid green";
+    Name.style.borderBottom= "2px solid green";
     return true;
   }
 }
 
 function ValidateAddress() {
   console.log("helo");
-  var regAdress = /^[a-zA-Z]{3,20}$/;
+  var regAdress = /^[a-zA-Z,0-9]{3,90}$/;
   if (Address.value == "" || regAdress.test(Address.value) == false) {
     Address.style.borderBottom = "2px solid red";
     return false;
@@ -38,6 +49,9 @@ function ValidateAddress() {
   }
 }
 function ValidateDOB() {
+
+
+  
   // console.log(birthdayGiven);
   var ara1 = birthday.value.split("-");
   console.log(ara1);
@@ -72,7 +86,7 @@ form.addEventListener("submit", (e) => {
   function Adddata() {
     if (
       ValidateName() == true &&
-      ValidateAddress() == true &&
+      ValidateAddress() == true && ValidateEmail()== true &&
       ValidateDOB() == true){
     let Name1 = document.getElementById("Name").value;
     let Address1 = document.getElementById("Address").value;
