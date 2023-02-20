@@ -15,12 +15,12 @@ const clickModal = () => {
 };
 
 function ValidateEmail() {
-  var check =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  var check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (email.value == "" || check.test(email.value) == false) {
     email.style.borderBottom = "2px solid red";
     return false;
   } else {
-    email.style.borderBottom= "2px solid green";
+    email.style.borderBottom = "2px solid green";
     return true;
   }
 }
@@ -32,7 +32,7 @@ function ValidateName() {
     Name.style.borderBottom = "2px solid red";
     return false;
   } else {
-    Name.style.borderBottom= "2px solid green";
+    Name.style.borderBottom = "2px solid green";
     return true;
   }
 }
@@ -49,14 +49,19 @@ function ValidateAddress() {
   }
 }
 function ValidateDOB() {
-//   var date = new Date();
-
-// var currentMonth = date.getMonth();
-// var currentDate = date.getDate();
-// var currentYear = date.getFullYear();
-// $('#birthday').datepicker({
-// maxDate: new Date(currentYear, currentMonth, currentDate)
-// });
+  //   var date = new Date();
+  // $("#birthday").datepicker(max, new Date());
+  $("#birthday").datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    endDate: "today",
+  });
+  // var currentMonth = date.getMonth();
+  // var currentDate = date.getDate();
+  // var currentYear = date.getFullYear();
+  // $('#birthday').datepicker({
+  // maxDate: new Date(currentYear, currentMonth, currentDate)
+  // });
 
   // var ara1 = birthday.value.split("-");
   // console.log(ara1);
@@ -82,17 +87,14 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
-
-
 // Adddata...................................................................................
 
-
-
-  function Adddata() {
-    if (
-      ValidateName() == true &&
-      ValidateAddress() == true && ValidateEmail()== true 
-      ){
+function Adddata() {
+  if (
+    ValidateName() == true &&
+    ValidateAddress() == true &&
+    ValidateEmail() == true
+  ) {
     let Name1 = document.getElementById("Name").value;
     let Address1 = document.getElementById("Address").value;
     let email1 = document.getElementById("email").value;
@@ -116,19 +118,18 @@ form.addEventListener("submit", (e) => {
     success.style.display = "block";
     setTimeout(function () {
       location.reload();
-    }, 2000);
+    }, 1000);
     return true;
-    
+
     // console.log(Name, Address, Gender, email, birthday);
-  }
-  else {
+  } else {
     failure.style.display = "block";
     success.style.display = "none";
     setTimeout(function () {
       location.reload();
-    },2000);
+    }, 1000);
+  }
 }
-} 
 
 // then how to shhow Data ...Adddata...Adddata.............
 function showData() {
